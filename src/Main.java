@@ -14,9 +14,13 @@ public class Main {
     }
 
     private static void inputMethod() {
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
-        validateInput(input);
+        try {
+            System.out.print("Enter a string: ");
+            String input = scanner.nextLine();
+            validateInput(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void validateInput(String input) {
@@ -31,12 +35,17 @@ public class Main {
     }
 
     private static void splitAndEnqueue(String input) {
-        String[] words = input.split("\\.");
-        Queue queue = new Queue();
-        for (String word : words) {
-            queue.add(word);
+        try {
+            String[] words = input.split("\\.");
+            Queue queue = new Queue();
+            for (String word : words) {
+                queue.add(word);
+            }
+            pushOntoStack(queue);
+        } catch (Exception e) {
+            System.out.println("Error: an exception occurred while splitting and enqueuing the input.");
+            e.printStackTrace();
         }
-        pushOntoStack(queue);
     }
 
     private static void pushOntoStack(Queue queue) {
