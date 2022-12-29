@@ -1,67 +1,46 @@
 package src;
 
-import java.util.EmptyStackException;
+class Stack{
+    private static class Node<String>{
+        String data;
+        Node next = null;
 
-public class Stack {
-    private static class Node {
-        private String data;
-        private Node next;
-
-        private Node(String data) {
+        public Node(String data) {
             this.data = data;
         }
     }
-
     private Node top;
-
-    public boolean isEmpty() {
+    public Boolean isEmpty(){
         return top == null;
     }
 
-    public String peek() {
-        if (isEmpty()) {
-            throw new EmptyStackException();
+    public void push(String data){
+        Node<String> newNode = new Node<>(data);
+        if(isEmpty()){
+            top = newNode;
+        }else{
+            newNode.next = top;
+            top = newNode;
         }
-        return top.data;
     }
-
-    public void push(String data) {
-        Node node = new Node(data);
-        node.next = top;
-        top = node;
-    }
-
-    public String pop() {
-        if (isEmpty()) {
-            throw new EmptyStackException();
-        }
-        String data = top.data;
+    public void pop(){
         top = top.next;
-        return data;
     }
-
-    public void print() {
-        Node current = top;
-        while (current != null) {
-            System.out.println("Stack element: " + current.data);
-            current = current.next;
+    public void Print(){
+        Node<String> temp = top;
+        while(temp != null){
+            System.out.print(temp.data + " ");
+            temp = temp.next;
         }
         System.out.println();
     }
-
-    public void printTraverse() {
-        Node current = top;
-        while (current != null) {
-            System.out.println(current.data);
-            current = current.next;
-        }
-    }
-    public static void main(String[] args) {
-        Stack stack = new Stack();
-        stack.push("Hello");
-        stack.push("World");
-        stack.push("!");
-        stack.print();
-        stack.printTraverse();
+    public static void main(String[] args){
+        Stack s = new Stack();
+        s.push("g");
+        s.push("j");
+        s.push("l");
+        s.Print();
+        s.pop();
+        s.Print();
     }
 }

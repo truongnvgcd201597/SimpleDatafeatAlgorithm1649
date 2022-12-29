@@ -1,67 +1,62 @@
 package src;
 
-import java.util.NoSuchElementException;
+class Queue{
+    private Node <String> head, tail;
 
-public class Queue {
-    private static class Node {
-        private String data;
-        private Node next;
+    private class Node<String>{
+        String data;
+        Node next = null;
 
-        private Node(String data) {
+        public Node(String data) {
             this.data = data;
         }
     }
-
-    private Node head;
-    private Node tail;
-
-    public boolean isEmpty() {
+    public boolean isEmpty(){
         return head == null;
     }
+    public void EnQueue(String data){
+        Node<String> newNode = new Node<>(data);
 
-    public String peek() {
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        }
-        return head.data;
-    }
-
-    public void add(String data) {
-        Node node = new Node(data);
-        if (tail != null) {
-            tail.next = node;
-        }
-        tail = node;
-        if (head == null) {
-            head = node;
+        if(data == null || data == "") throw new Error("Empty value");
+        if(isEmpty()){
+            head = newNode;
+            tail = newNode;
+        }else{
+            tail.next = newNode;
+            tail = newNode;
         }
     }
-
-    public String remove() {
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        }
+    public String DeQueue(){
+        if(isEmpty()) throw new NullPointerException();
         String data = head.data;
         head = head.next;
-        if (head == null) {
-            tail = null;
-        }
         return data;
     }
+    public int size(){
+        int count = 0;
+        while (head != null){
+            count++;
+            head = head.next;
+        }
+        return count;
+    }
 
-    public void print() {
-        Node current = head;
-        while (current != null) {
-            System.out.println("Element: " + current.data);
-            current = current.next;
+    public void Print(){
+        Node<String> temp = head;
+        while(temp != null){
+            System.out.print(temp.data + " ");
+            temp = temp.next;
         }
         System.out.println();
     }
-    public static void main(String[] args) {
-        Queue queue = new Queue();
-        queue.add("Hello");
-        queue.add("World");
-        queue.add("!");
-        queue.print();
+    public static void main(String[] args){
+        Queue q = new Queue();
+        q.EnQueue("BABA");
+        q.EnQueue("BEBE");
+        q.EnQueue("DEDE");
+        q.Print();
+        q.DeQueue();
+        q.Print();
+        System.out.println(q.size());
     }
 }
